@@ -110,4 +110,4 @@ To practice functional modelling of the BabySoC using simulation tools (Icarus V
 - For issues, check file paths or rerun `make pre_synth_sim`.
 - The `readme.markdown` files in `part1` and `part2` can be merged into this `README.md` or used as supplementary notes.
 
-As of 01:59 PM IST on Saturday, October 04, 2025, this README reflects the current progress and deliverables for Week 2.
+
