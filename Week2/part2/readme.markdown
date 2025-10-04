@@ -108,7 +108,6 @@ cd output/pre_synth_sim; ./pre_synth_sim.out;
 fi
 VCD info: dumpfile pre_synth_sim.vcd opened for output.
 
-
 - **Notes**: The log shows the successful execution of SandPiper to generate `rvmyth.v` and `rvmyth_gen.v`, followed by the compilation and simulation using `iverilog` and `vvp`. The simulation started, and a `.vcd` file (`pre_synth_sim.vcd`) was opened for output. The log cuts off before completion (e.g., no `$finish` or end time), so ensure the simulation finished by checking the `pre_synth_sim.vcd` file size or running it again to confirm.
 
 - **VCD File**:
@@ -125,22 +124,32 @@ VCD info: dumpfile pre_synth_sim.vcd opened for output.
 Using the generated `pre_synth_sim.vcd`, open it in GTKWave to create screenshots. Based on the analysis, include:
 
 - **Reset Operation Screenshot (t = 0–200 ns)**:
-- **File**: `waveforms/reset_waveform.png`
+- **File**: ![reset behaviour](reset_behav.png)
 - **Content**: Show `reset`, `CPU_reset_a0`, `CPU_pc_a0`, and `CPU_Xreg_value_a3[17]`. Zoom to t=0–200 ns, highlighting `reset = 1` (t=20–120 ns) holding PC at 0x00000000 and registers at initialized values, with PC incrementing post-reset.
 - **Steps**: In GTKWave, load `pre_synth_sim.vcd`, expand the hierarchy to find `core > cpu`, add signals, set time markers at 20 ns and 120 ns, and export via **File > Write Image**.
 
 - **Clocking Screenshot (t = 0–600 ns)**:
-- **File**: `waveforms/clocking_waveform.png`
+- **File**: ![clock ](clk_behav.png)
 - **Content**: Display `CLK`, `REF`, `VCO_IN`, `ENb_VCO`, and `OUT`. Use a full view (t=0–600 ns) or zoom to t=100–300 ns, showing CLK stabilizing (~12.5 ns period) and OUT updating post-reset.
 - **Steps**: Add PLL-related signals, use "Translate Filter" for labels, and export the image.
 
 - **Dataflow Between Modules Screenshot (t = 100–600 ns)**:
-- **File**: `waveforms/dataflow_waveform.png`
+- **File**: ![data flow between  odules](data_flow.png)
 - **Content**: Include `CPU_pc_a0`, `CPU_instr_a1`, `CPU_result_a3`, `CPU_Xreg_value_a5[17]`, `RV_TO_DAC`, and `OUT`. Capture a loop iteration (e.g., BNE) showing data flow from core to DAC.
 - **Steps**: Group signals into buses, add cursors for PC increments, and save the screenshot.
 
 - **Verification**:
 - Ensure the `.vcd` file contains all signals (check with `$dumpvars` in `testbench.v`). If signals are missing, update the testbench to dump the hierarchy (e.g., `$dumpvars(1, core)`).
+
+- **Simulation Output Screenshot**:
+- **File**: ![simulation output](sim_output.png)
+- **Content**: Displays the terminal output from `make pre_synth_sim`, including SandPiper compilation and VCD generation steps.
+- **Steps**: Capture the terminal during simulation execution.
+
+- **Simulation Log Screenshot**:
+- **File**: ![simulation log](simulation_log.png)
+- **Content**: Captures the detailed simulation log, confirming "VCD info: dumpfile pre_synth_sim.vcd opened for output" and runtime progress.
+- **Steps**: Export the GTKWave log view or terminal output as an image.
 
 ---
 
@@ -156,19 +165,8 @@ Provide concise descriptions for each screenshot:
 - **Dataflow Between Modules (t = 100–600 ns)**:
 - **Explanation**: This waveform represents pipeline dataflow, with `CPU_pc_a0` incrementing, `CPU_instr_a1` fetching instructions (e.g., ADDI/BNE), `CPU_result_a3` computing ALU results, and data propagating to `RV_TO_DAC`/`OUT`, confirming core-to-DAC integration.
 
-- **Placement**:
-- Add these under an "Observations" section in your `README.md`, linking to the screenshot files (e.g., `![Reset Operation Waveform](waveforms/reset_waveform.png)`).
 
----
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
   
   
   
