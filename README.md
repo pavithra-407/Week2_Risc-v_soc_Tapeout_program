@@ -1,4 +1,3 @@
-
 # RISC-V SoC Tapeout Program - Week 2
 
 ## Overview
@@ -25,8 +24,11 @@ To build a solid understanding of SoC fundamentals through conceptual learning.
   - Functional modelling (pre-RTL and physical design) validates the high-level behavior of the SoC, ensuring correctness before detailed implementation.
 
 ### Deliverable
-- **Write-up**: A 1–2 page document (e.g., `soc_fundamentals_writeup.md`) summarizing your understanding of SoC design fundamentals and how BabySoC fits into this learning journey.
-  - **File Location**: `docs/soc_fundamentals_writeup.md`
+- **Write-up**: A 1–2 page document summarizing your understanding of SoC design fundamentals and how BabySoC fits into this learning journey.
+  - **File**: [soc_fundamentals_writeup.md](docs/part1.md)
+  - **Supporting Images**: 
+    - [479033_1_En_2_Fig10_HTML.png](docs/479033_1_En_2_Fig10_HTML.png)
+    - [System-on-Chip-SoC-Wiki.jpg](docs/System-on-Chip-SoC-Wiki.jpg)
   - **Content**: Include key points from the focus areas, personal insights, and a brief explanation of BabySoC's role as a learning tool (e.g., its simplified architecture aids in mastering SoC design stages).
 
 ---
@@ -59,29 +61,31 @@ To practice functional modelling of the BabySoC using simulation tools (Icarus V
 4. **Open .vcd Files in GTKWave and Analyze**
    - Command: `gtkwave output/pre_synth_sim/pre_synth_sim.vcd`
    - **Analysis Areas**:
-     - **Reset Operation**: Verify `reset` toggling (t=20–120 ns) holds `CPU_pc_a0` at 0x00000000 and initializes registers.
+     - **Reset Operation**: Verify `reset` toggling (t=20–120 ns) holds `CPU_pc_a0` at 0x00000000 and initializes registers (e.g., `CPU_Xreg_value_a3[17]`).
      - **Clocking**: Check `CLK` stability (~12.5 ns period) from `REF` and `VCO_IN`, with `OUT` updates.
-     - **Dataflow Between Modules**: Trace `CPU_pc_a0`, `CPU_instr_a1`, `CPU_result_a3`, and `OUT` for instruction execution and data propagation.
+     - **Dataflow Between Modules**: Trace `CPU_pc_a0`, `CPU_instr_a1`, `CPU_result_a3`, `CPU_Xreg_value_a5[17]`, `RV_TO_DAC`, and `OUT` for instruction execution and data propagation.
 
 5. **Document Your Observations with Screenshots of Waveforms**
    - Use GTKWave to capture and save images (e.g., via **File > Write Image**).
 
 ### Deliverable
 - **Simulation Logs**
-  - **Compilation and Initial Error Log**: [compilation_log.txt](simulation/compilation_log.txt)
+  - **Compilation and Initial Error Log**: [compilation_log.txt](Week2/part2/simulation/compilation_log.txt)
     - Content includes the `git clone` and initial `iverilog` error due to missing `baby_soc.v`.
-  - **Pre-Synthesis Simulation Log**: [simulation_log.txt](simulation/simulation_log.txt)
+  - **Pre-Synthesis Simulation Log**: [simulation_log.txt](Week2/part2/simulation/simulation_log.txt)
     - Content from `make pre_synth_sim`, showing SandPiper execution and `.vcd` file generation.
-  - **VCD File**: [pre_synth_sim.vcd](output/pre_synth_sim/pre_synth_sim.vcd)
+    - **Supporting Image**: [simulation_log.png](Week2/part2/simulation_log.png)
+  - **VCD File**: [pre_synth_sim.vcd](Week2/part2/output/pre_synth_sim/pre_synth_sim.vcd)
     - Verify file presence and non-zero size.
 
 - **GTKWave Screenshots Highlighting Correct BabySoC Behavior**
-  - **Reset Operation Screenshot (t = 0–200 ns)**: [reset_waveform.png](waveforms/reset_waveform.png)
+  - **Reset Operation Screenshot (t = 0–200 ns)**: [reset_behav.png](Week2/part2/reset_behav.png)
     - Show `reset`, `CPU_reset_a0`, `CPU_pc_a0`, and `CPU_Xreg_value_a3[17]` with PC held at 0 during reset.
-  - **Clocking Screenshot (t = 0–600 ns)**: [clocking_waveform.png](waveforms/clocking_waveform.png)
+  - **Clocking Screenshot (t = 0–600 ns)**: [clk_behav.png](Week2/part2/clk_behav.png)
     - Display `CLK`, `REF`, `VCO_IN`, `ENb_VCO`, and `OUT` showing stable clock generation.
-  - **Dataflow Between Modules Screenshot (t = 100–600 ns)**: [dataflow_waveform.png](waveforms/dataflow_waveform.png)
+  - **Dataflow Between Modules Screenshot (t = 100–600 ns)**: [data_flow.png](Week2/part2/data_flow.png)
     - Include `CPU_pc_a0`, `CPU_instr_a1`, `CPU_result_a3`, `CPU_Xreg_value_a5[17]`, `RV_TO_DAC`, and `OUT` for dataflow.
+  - **Supporting Image**: [sim_output.png](Week2/part2/sim_output.png)
 
 - **Short Explanation (per Screenshot) of What the Waveform Represents**
   - **Reset Operation (t = 0–200 ns)**: This waveform represents the reset phase, where `reset` is high (t=20–120 ns), holding `CPU_pc_a0` at 0x00000000 and initializing registers (e.g., `CPU_Xreg_value_a3[17]` to 17). Post-reset (t>120 ns), PC increments, confirming synchronous reset and clean execution start.
@@ -91,11 +95,11 @@ To practice functional modelling of the BabySoC using simulation tools (Icarus V
 ---
 
 ## Project Structure
-- `src/module/`: Verilog source files (e.g., `testbench.v`, `vsdbabysoc.v`).
-- `output/compiled_tlv/`: Generated files (e.g., `rvmyth.v`, `rvmyth_gen.v`).
-- `simulation/`: Logs and `.vcd` files.
-- `waveforms/`: GTKWave screenshots.
-- `docs/`: Theoretical write-up.
+- `docs/`: Theoretical write-up and images (e.g., `part1.md`, `479033_1_En_2_Fig10_HTML.png`, `System-on-Chip-SoC-Wiki.jpg`).
+- `Week2/part2/src/module/`: Verilog source files (e.g., `testbench.v`, `vsdbabysoc.v`).
+- `Week2/part2/output/compiled_tlv/`: Generated files (e.g., `rvmyth.v`, `rvmyth_gen.v`).
+- `Week2/part2/simulation/`: Logs and `.vcd` files.
+- `Week2/part2/`: GTKWave screenshots (e.g., `reset_behav.png`, `clk_behav.png`, `data_flow.png`, `sim_output.png`).
 
 ## References
 - [Fundamentals of SoC Design](https://github.com/hemanthkumardm/SFAL-VSD-SoC-Journey/tree/main/11.%20Fundamentals%20of%20SoC%20Design)
@@ -104,4 +108,6 @@ To practice functional modelling of the BabySoC using simulation tools (Icarus V
 ## Additional Notes
 - Ensure the simulation completes (look for `$finish` in logs) and `.vcd` file is valid.
 - For issues, check file paths or rerun `make pre_synth_sim`.
+- The `readme.markdown` files in `part1` and `part2` can be merged into this `README.md` or used as supplementary notes.
 
+As of 01:59 PM IST on Saturday, October 04, 2025, this README reflects the current progress and deliverables for Week 2.
