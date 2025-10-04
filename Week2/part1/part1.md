@@ -80,7 +80,7 @@ VSDBabySoC is a simplified SoC project that's perfect for beginners like me. It'
 - The testbench simulates inputs like reset and clock references, monitoring the analog OUT. In my runs, I saw r17 accumulate to 43 decimal (from the loop) before outputting.
 
 This flow mirrors real SoCs but at a manageable scale, with ~13 instructions preloaded for a basic computation loop.
-
+![VSDBabysoc](vsdbabysoc_block_diagram.png)
 ### Components Breakdown
 - **RVMYTH**: A basic RISC-V CPU implementing RV32I ISA subset. It's open-source, so I could tinker with its code in Verilog. It handles simple instructions like ADDI, ADD, SUB, and branches (BNE, BEQ). In simulation, I saw the PC increment and registers update—e.g., r17 accumulating loop results up to a branch termination.
 - **PLL (avsdpll)**: Locks the clock to a reference, modeling behavioral adjustment (period = refpd / 8). This avoids off-chip clock issues like jitter or delays. In waveforms, I observed CLK stabilizing post-reset, with frequency division for core syncing.
